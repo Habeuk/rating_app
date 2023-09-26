@@ -1,0 +1,4 @@
+administer ratting_app configuration:
+  title: 'Administer ratting_app configuration'
+  description: 'Optional description.'
+  restrict access: true
