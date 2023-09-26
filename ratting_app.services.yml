@@ -1,6 +1,0 @@
-services:
-  ratting_app.event_subscriber:
-    class: Drupal\ratting_app\EventSubscriber\RattingAppSubscriber
-    arguments: ['@messenger']
-    tags:
-      - { name: event_subscriber }

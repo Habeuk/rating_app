@@ -1,63 +1,68 @@
 <?php
 
-namespace Drupal\ratting_app\EventSubscriber;
+namespace Drupal\rating_app\EventSubscriber;
 
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\Event\ResponseEvent as FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent as GetResponseEvent;
 
 /**
- * ratting_app event subscriber.
+ * rating_app event subscriber.
  */
-class RattingAppSubscriber implements EventSubscriberInterface {
-
+class RatingAppSubscriber implements EventSubscriberInterface {
+  
   /**
    * The messenger.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
-
+  
   /**
    * Constructs event subscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger.
+   *        The messenger.
    */
   public function __construct(MessengerInterface $messenger) {
     $this->messenger = $messenger;
   }
-
+  
   /**
    * Kernel request event handler.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   *   Response event.
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+   *        Response event.
    */
   public function onKernelRequest(GetResponseEvent $event) {
-   // $this->messenger->addStatus(__FUNCTION__);
+    // $this->messenger->addStatus(__FUNCTION__);
   }
-
+  
   /**
    * Kernel response event handler.
    *
-   * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-   *   Response event.
+   * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+   *        Response event.
    */
   public function onKernelResponse(FilterResponseEvent $event) {
-  //  $this->messenger->addStatus(__FUNCTION__);
+    // $this->messenger->addStatus(__FUNCTION__);
   }
-
+  
   /**
+   *
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
     return [
-      KernelEvents::REQUEST => ['onKernelRequest'],
-      KernelEvents::RESPONSE => ['onKernelResponse'],
+      KernelEvents::REQUEST => [
+        'onKernelRequest'
+      ],
+      KernelEvents::RESPONSE => [
+        'onKernelResponse'
+      ]
     ];
   }
-
+  
 }

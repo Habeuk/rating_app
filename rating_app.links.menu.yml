@@ -1,0 +1,6 @@
+rating_app.settings_form:
+  title: "rating_app"
+  description: "Configure rating_app."
+  parent: system.admin_config_system
+  route_name: rating_app.settings_form
+  weight: 10

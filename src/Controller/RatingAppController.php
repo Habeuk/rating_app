@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\ratting_app\Controller;
+namespace Drupal\rating_app\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 
 /**
- * Returns responses for ratting_app routes.
+ * Returns responses for rating_app routes.
  */
-class RattingAppController extends ControllerBase {
+class RatingAppController extends ControllerBase {
 
   /**
    * Builds the response.

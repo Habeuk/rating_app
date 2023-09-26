@@ -1,6 +1,0 @@
-ratting_app.settings_form:
-  title: 'ratting_app'
-  description: 'Configure ratting_app.'
-  parent: system.admin_config_system
-  route_name: ratting_app.settings_form
-  weight: 10

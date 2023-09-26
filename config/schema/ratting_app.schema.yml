@@ -1,8 +1,0 @@
-# Schema for the configuration files of the ratting_app module.
-ratting_app.settings:
-  type: config_object
-  label: 'ratting_app settings'
-  mapping:
-    example:
-      type: string
-      label: 'Example'

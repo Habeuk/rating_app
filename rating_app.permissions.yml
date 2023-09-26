@@ -1,0 +1,4 @@
+administer rating_app configuration:
+  title: "Administer rating_app configuration"
+  description: "Optional description."
+  restrict access: true

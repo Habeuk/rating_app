@@ -1,4 +1,4 @@
-name: ratting_app
+name: rating_app
 type: module
 description: Provides additional functionality for the site.
 package: Custom

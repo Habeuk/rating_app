@@ -1,0 +1,15 @@
+rating_app.example:
+  path: "/rating-app/example"
+  defaults:
+    _title: "Example"
+    _controller: '\Drupal\rating_app\Controller\RatingAppController::build'
+  requirements:
+    _permission: "access content"
+
+rating_app.settings_form:
+  path: "/admin/config/system/rating-app"
+  defaults:
+    _title: "rating_app settings"
+    _form: 'Drupal\rating_app\Form\SettingsForm'
+  requirements:
+    _permission: "administer rating_app configuration"

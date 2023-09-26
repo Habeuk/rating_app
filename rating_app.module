@@ -1,0 +1,17 @@
+<?php
+
+/**
+ *
+ * @file
+ * Primary module hooks for rating_app module.
+ */
+
+/**
+ * implement hook_entity_base_field_info
+ * ND: il faut executer "drush entup" pour que les champs soit MAJ dans la bd.
+ *
+ * @param EntityTypeInterface $entity_type
+ *
+ */
+function rating_app_entity_base_field_info(EntityTypeInterface $entity_type) {
+}

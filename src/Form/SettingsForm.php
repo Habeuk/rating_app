@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\ratting_app\Form;
+namespace Drupal\rating_app\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Configure ratting_app settings for this site.
+ * Configure rating_app settings for this site.
  */
 class SettingsForm extends ConfigFormBase {
 
@@ -14,14 +14,14 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'ratting_app_settings';
+    return 'rating_app_settings';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['ratting_app.settings'];
+    return ['rating_app.settings'];
   }
 
   /**
@@ -31,7 +31,7 @@ class SettingsForm extends ConfigFormBase {
     $form['example'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Example'),
-      '#default_value' => $this->config('ratting_app.settings')->get('example'),
+      '#default_value' => $this->config('rating_app.settings')->get('example'),
     ];
     return parent::buildForm($form, $form_state);
   }
@@ -50,7 +50,7 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('ratting_app.settings')
+    $this->config('rating_app.settings')
       ->set('example', $form_state->getValue('example'))
       ->save();
     parent::submitForm($form, $form_state);
