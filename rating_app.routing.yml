@@ -1,8 +1,16 @@
-rating_app.example:
-  path: "/rating-app/example"
+rating_app.get_reviews:
+  path: "/rating-app/get-reviews/{entity_type_id}/{entity_id}"
   defaults:
-    _title: "Example"
-    _controller: '\Drupal\rating_app\Controller\RatingAppController::build'
+    _title: "Get reviews"
+    _controller: '\Drupal\rating_app\Controller\RatingAppController::getReviews'
+  requirements:
+    _permission: "access content"
+    
+rating_app.like_dislike:
+  path: "/rating-app/review/like-dislike/{entity_type_id}/{entity_id}/{value}"
+  defaults:
+    _title: "Like or dislike"
+    _controller: '\Drupal\rating_app\Controller\RatingAppController::LikeDislikeReview()'
   requirements:
     _permission: "access content"
 

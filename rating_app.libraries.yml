@@ -7,35 +7,38 @@ rating_app:
       css/rating-app.css: {}
   dependencies:
     - core/drupalSettings
-    - rating_app/jquery-labelauty
 
-# Third-party library (self hosted).
-jquery-labelauty:
-  remote: https://github.com/fntneves/jquery-labelauty
-  version: 1.1.0
-  license:
-    name: MIT
-    url: https://github.com/fntneves/jquery-labelauty/blob/v1.1.0/LICENSE
-    gpl-compatible: true
+reviews_resume:
   js:
-    /libraries/jquery-labelauty/source/jquery-labelauty.js: {}
+    ratingReviews/ratingReviews.umd.js: { attributes: { type: 'text/javascript'} }
   css:
     component:
-      /libraries/jquery-labelauty/source/jquery-labelauty.css: {}
+      ratingReviews/style.css: {}
   dependencies:
-    - core/jquery
+    - rating_app/vuejs_dev
+    - core/drupalSettings
 
 # Third-party library (CDN).
-vuejs:
+vuejs_dev:
   remote: https://vuejs.org
-  version: 2.0.5
+  version: 3.3.4
   license:
     name: MIT
     url: https://github.com/vuejs/vue/blob/dev/LICENSE
     gpl-compatible: true
   js:
-    https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js: { type: external, minified: true }
+    https://unpkg.com/vue@3/dist/vue.global.js: { type: external, minified: true }
 
+vuejs:
+  remote: https://vuejs.org
+  version: 3.3.4
+  license:
+    name: MIT
+    url: https://github.com/vuejs/vue/blob/dev/LICENSE
+    gpl-compatible: true
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js: { type: external, minified: true }
+    
 rating_app_reviews_resume:
   css:
     component:

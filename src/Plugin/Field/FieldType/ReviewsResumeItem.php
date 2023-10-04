@@ -15,7 +15,7 @@ use Drupal\Core\TypedData\DataDefinition;
  * @FieldType(
  *   id = "rating_app_reviews_resume",
  *   label = @Translation("Reviews resume"),
- *   category = @Translation("General"),
+ *   category = @Translation("Reviews"),
  *   default_widget = "rating_app_reviews_resume",
  *   default_formatter = "rating_app_reviews_resume_default"
  * )

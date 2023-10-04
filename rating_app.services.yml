@@ -4,3 +4,7 @@ services:
     arguments: ["@messenger"]
     tags:
       - { name: event_subscriber }
+  
+  rating_app.manager:
+    class: Drupal\rating_app\Services\ManagerRatingApp
+    arguments: ["@messenger","@entity_type.manager"]
