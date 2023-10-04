@@ -35,3 +35,13 @@ vuejs:
     gpl-compatible: true
   js:
     https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js: { type: external, minified: true }
+
+rating_app_reviews_resume:
+  css:
+    component:
+      css/rating-app-reviews-resume-widget.css: {}
+
+rating_app_entity_start:
+  css:
+    component:
+      css/rating-app-entity-start-widget.css: {}

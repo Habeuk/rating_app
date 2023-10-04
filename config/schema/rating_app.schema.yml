@@ -6,3 +6,50 @@ rating_app.settings:
     example:
       type: string
       label: "Example"
+
+
+# Field instance.
+field.field_settings.rating_app_reviews_resume:
+  type: mapping
+  label: Example field settings
+  mapping:
+    bar:
+      type: string
+      label: Bar
+
+# Default value.
+field.value.rating_app_reviews_resume:
+  type: mapping
+  label: Default value
+  mapping:
+    value:
+      type: string
+      label: Value 1
+
+# Field formatter.
+field.formatter.settings.rating_app_reviews_resume_default:
+  type: mapping
+  label: Example formatter settings
+  mapping:
+    foo:
+      type: string
+      label: Foo
+
+
+# Default value.
+field.value.rating_app_entity_start:
+  type: mapping
+  label: Default value
+  mapping:
+    value_1:
+      type: string
+      label: Value 1
+
+# Field formatter.
+field.formatter.settings.rating_app_entity_start_default:
+  type: mapping
+  label: Example formatter settings
+  mapping:
+    foo:
+      type: string
+      label: Foo
