@@ -1,0 +1,5 @@
+like_dislike.add_form:
+  title: 'Add like dislike'
+  route_name: entity.like_dislike.add_form
+  appears_on:
+    - entity.like_dislike.collection

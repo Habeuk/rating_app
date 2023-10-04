@@ -1,0 +1,22 @@
+entity.like_dislike.settings:
+  title: 'Settings'
+  route_name: entity.like_dislike.settings
+  base_route: entity.like_dislike.settings
+entity.like_dislike.view:
+  title: 'View'
+  route_name: entity.like_dislike.canonical
+  base_route: entity.like_dislike.canonical
+entity.like_dislike.edit_form:
+  title: 'Edit'
+  route_name: entity.like_dislike.edit_form
+  base_route: entity.like_dislike.canonical
+entity.like_dislike.delete_form:
+  title: 'Delete'
+  route_name: entity.like_dislike.delete_form
+  base_route: entity.like_dislike.canonical
+  weight: 10
+entity.like_dislike.collection:
+  title: 'like dislikes'
+  route_name: entity.like_dislike.collection
+  base_route: system.admin_content
+  weight: 10

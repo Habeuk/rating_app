@@ -10,7 +10,7 @@ rating_app.like_dislike:
   path: "/rating-app/review/like-dislike/{entity_type_id}/{entity_id}/{value}"
   defaults:
     _title: "Like or dislike"
-    _controller: '\Drupal\rating_app\Controller\RatingAppController::LikeDislikeReview()'
+    _controller: '\Drupal\rating_app\Controller\RatingAppController::LikeDislikeReview'
   requirements:
     _permission: "access content"
 
@@ -21,3 +21,11 @@ rating_app.settings_form:
     _form: 'Drupal\rating_app\Form\SettingsForm'
   requirements:
     _permission: "administer rating_app configuration"
+
+entity.like_dislike.settings:
+  path: 'admin/structure/like-dislike'
+  defaults:
+    _form: '\Drupal\rating_app\Form\LikeDislikeSettingsForm'
+    _title: 'like dislike'
+  requirements:
+    _permission: 'administer like dislike'
