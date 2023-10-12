@@ -24,9 +24,9 @@ class ReviewsResumeWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element['value'] = [
-      '#type' => 'hiden',
+      '#type' => 'hidden',
       '#title' => $this->t('Value 1'),
-      '#default_value' => isset($items[$delta]->value) ? $items[$delta]->value : NULL,
+      '#default_value' => isset($items[$delta]->value) ? $items[$delta]->value : 1,
       '#size' => 20
     ];
     

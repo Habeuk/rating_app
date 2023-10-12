@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: dislike_comment
+label: dislike_comment
+value_type: points
+description: ''

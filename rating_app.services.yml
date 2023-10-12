@@ -7,4 +7,4 @@ services:
   
   rating_app.manager:
     class: Drupal\rating_app\Services\ManagerRatingApp
-    arguments: ["@messenger","@entity_type.manager"]
+    arguments: ["@messenger","@entity_type.manager","@database"]

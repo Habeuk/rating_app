@@ -7,7 +7,7 @@ rating_app.get_reviews:
     _permission: "access content"
     
 rating_app.like_dislike:
-  path: "/rating-app/review/like-dislike/{entity_type_id}/{entity_id}/{value}"
+  path: "/rating-app/review/like-dislike/{entity_type_id}/{entity_id}"
   defaults:
     _title: "Like or dislike"
     _controller: '\Drupal\rating_app\Controller\RatingAppController::LikeDislikeReview'
