@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {}
-id: rating_app__node
-label: 'Rating app node'
-target_entity_type_id: node
-description: ""

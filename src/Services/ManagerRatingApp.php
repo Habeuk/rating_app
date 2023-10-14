@@ -68,19 +68,19 @@ class ManagerRatingApp {
    *
    * @var string
    */
-  protected static $vote_type__like_comment = 'like_comment';
+  protected static $vote_type__like_comment = 'rating_app__like_comment';
   /**
    *
    * @var string
    */
-  protected static $vote_type__dislike_comment = 'dislike_comment';
+  protected static $vote_type__dislike_comment = 'rating_app__dislike_comment';
   /**
    * La valeur reelle varie de de 1 à 5.
    * ( example : note_1 ).
    *
    * @var string
    */
-  protected static $vote_type__comment_note = 'note_';
+  protected static $vote_type__comment_note = 'rating_app__note_';
   
   /**
    *
