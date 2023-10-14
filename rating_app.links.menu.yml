@@ -4,14 +4,3 @@ rating_app.settings_form:
   parent: system.admin_config_system
   route_name: rating_app.settings_form
   weight: 10
-
-entity.like_dislike.settings:
-  title: 'like dislike'
-  description: 'Configure a like dislike entity type.'
-  route_name:  entity.like_dislike.settings
-  parent: system.admin_structure
-entity.like_dislike.collection:
-  title: 'like dislikes'
-  description: 'List of like dislikes.'
-  route_name: entity.like_dislike.collection
-  parent: system.admin_content

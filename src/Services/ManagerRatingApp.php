@@ -152,12 +152,7 @@ class ManagerRatingApp {
       $query->range($start, $this->limit);
       $ids = $query->execute();
     }
-    \Stephane888\Debug\debugLog::kintDebugDrupal([
-      'ids' => $ids,
-      'start' => $start,
-      'limit' => $this->limit,
-      'note' => $this->note
-    ], 'getReviews');
+    
     $comments = [];
     if ($ids) {
       $entities = $this->EntityTypeManager->getStorage('comment')->loadMultiple($ids);

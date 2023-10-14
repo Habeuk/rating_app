@@ -3,6 +3,3 @@ administer rating_app configuration:
   description: "Optional description."
   restrict access: true
 
-administer like dislike:
-  title: 'Administer like dislike settings'
-  restrict access: true

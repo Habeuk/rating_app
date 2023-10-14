@@ -15,7 +15,6 @@ use Drupal\Component\Utility\Html;
  *   id = "rating_app_reviews_resume_default",
  *   label = @Translation("Rating api formatter"),
  *   field_types = {
- *     "rating_app_reviews_resume",
  *     "comment"
  *   }
  * )
