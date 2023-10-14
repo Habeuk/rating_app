@@ -3,20 +3,24 @@
 namespace Drupal\rating_app\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
+use Drupal\comment\Plugin\Field\FieldFormatter\CommentDefaultFormatter;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\Component\Utility\Html;
 
 /**
  * Plugin implementation of the 'rating_app_reviews_resume_default' formatter.
  *
  * @FieldFormatter(
  *   id = "rating_app_reviews_resume_default",
- *   label = @Translation("Default"),
- *   field_types = {"rating_app_reviews_resume"}
+ *   label = @Translation("Rating api formatter"),
+ *   field_types = {
+ *     "rating_app_reviews_resume",
+ *     "comment"
+ *   }
  * )
  */
-class ReviewsResumeDefaultFormatter extends FormatterBase {
+class ReviewsResumeDefaultFormatter extends CommentDefaultFormatter {
   
   /**
    *
@@ -24,8 +28,7 @@ class ReviewsResumeDefaultFormatter extends FormatterBase {
    */
   public static function defaultSettings() {
     return [
-      'foo' => 'bar',
-      'comment_type' => 'comment'
+      'comments_per_pages' => 10
     ] + parent::defaultSettings();
   }
   
@@ -34,12 +37,8 @@ class ReviewsResumeDefaultFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $settings = $this->getSettings();
-    $element['foo'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Foo'),
-      '#default_value' => $settings['foo']
-    ];
+    $element = parent::settingsForm($form, $form_state);
+    //
     return $element;
   }
   
@@ -48,10 +47,8 @@ class ReviewsResumeDefaultFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $settings = $this->getSettings();
-    $summary[] = $this->t('Foo: @foo', [
-      '@foo' => $settings['foo']
-    ]);
+    $summary = parent::settingsSummary();
+    //
     return $summary;
   }
   
@@ -65,31 +62,43 @@ class ReviewsResumeDefaultFormatter extends FormatterBase {
     if (!$entity->isNew()) {
       $urlGetReviews = Url::fromRoute('rating_app.get_reviews', [
         'entity_type_id' => $entity->getEntityTypeId(),
+        'entity_id' => $entity->id(),
+        'field_name' => $items->getName()
+      ]);
+      $urlAddComment = Url::fromRoute('rating_app.add_comment', [
+        'entity_type_id' => $entity->getEntityTypeId(),
         'entity_id' => $entity->id()
       ]);
-      
+      $comment_type = $this->getFieldSetting('comment_type');
+      $id = Html::getUniqueId('rating-app-reviews');
       $element[] = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        '#attributes' => [
-          'id' => 'rating-app-reviews',
-          'data-entity-id' => $items->getEntity()->id(),
-          'data-entity-type-id' => $items->getEntity()->getEntityTypeId(),
-          'data-url-get-reviews' => "/" . $urlGetReviews->getInternalPath(),
-          'data-comment_type' => $this->getSetting('comment_type')
-        ]
+        // add additionnal information
+        '#comment_type' => $comment_type,
+        '#comment_display_mode' => $this->getFieldSetting('default_mode'),
+        'comments' => [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => [
+            'id' => $id,
+            'data-entity-id' => $items->getEntity()->id(),
+            'data-entity-type-id' => $items->getEntity()->getEntityTypeId(),
+            'data-url-get-reviews' => "/" . $urlGetReviews->getInternalPath(),
+            'data-add_comment' => "/" . $urlAddComment->getInternalPath()
+          ]
+        ],
+        'comment_form' => NULL
       ];
+      // dump($items->getName());
+      $element['#attached']['drupalSettings']['rating_app'] = [
+        'field_name' => $items->getName(),
+        'comment_type' => $comment_type,
+        'entity_id' => $items->getEntity()->id(),
+        'entity_type_id' => $items->getEntity()->getEntityTypeId(),
+        'id' => $id
+      ] + $this->getSettings();
       $element['#attached']['library'][] = 'rating_app/reviews_resume';
     }
-    foreach ($items as $delta => $item) {
-      if ($item->value_1) {
-        $element[$delta]['value_1'] = [
-          '#type' => 'item',
-          '#title' => $this->t('Value 1'),
-          '#markup' => $item->value_1
-        ];
-      }
-    }
+    
     return $element;
   }
   

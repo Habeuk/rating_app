@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: dislike_comment
-label: dislike_comment
+id: rating_app__dislike_comment
+label: 'Rating app dislike comment'
 value_type: points
 description: ''

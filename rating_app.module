@@ -1,5 +1,6 @@
 <?php
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
 
 /**
  *
@@ -15,5 +16,14 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *
  */
 function rating_app_entity_base_field_info(EntityTypeInterface $entity_type) {
-  //
+  $fields = [];
+  if ($entity_type->id() == 'vote') {
+    /**
+     * Permet de relier le vote à un commentaire
+     */
+    $fields['rating_app_comment_id'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(' Comment id'))->setDisplayOptions('form', [ //
+    ])->setSetting('target_type', 'comment')->setSetting('handler', 'default')->setDisplayOptions('view', [ //
+    ])->setDisplayConfigurable('form', true)->setDisplayConfigurable('view', TRUE);
+  }
+  return $fields;
 }

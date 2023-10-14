@@ -1,5 +1,5 @@
 rating_app.get_reviews:
-  path: "/rating-app/get-reviews/{entity_type_id}/{entity_id}"
+  path: "/rating-app/get-reviews/{entity_type_id}/{entity_id}/{field_name}"
   defaults:
     _title: "Get reviews"
     _controller: '\Drupal\rating_app\Controller\RatingAppController::getReviews'
@@ -29,3 +29,12 @@ entity.like_dislike.settings:
     _title: 'like dislike'
   requirements:
     _permission: 'administer like dislike'
+
+rating_app.add_comment:
+  path: "/rating-app/review/save-comment/{entity_type_id}/{entity_id}"
+  defaults:
+    _title: "Like or dislike"
+    _controller: '\Drupal\rating_app\Controller\RatingAppController::SaveReview'
+  requirements:
+    _permission: "access content"
+ 

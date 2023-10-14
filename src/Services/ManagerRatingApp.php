@@ -6,6 +6,8 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\votingapi\Entity\Vote;
 use Drupal\Core\Database\Connection;
+use Drupal\comment\Entity\Comment;
+use PDO;
 
 /**
  * Gere les avis
@@ -28,6 +30,24 @@ class ManagerRatingApp {
   protected $entity_id;
   
   /**
+   *
+   * @var string
+   */
+  protected $field_comment_name;
+  
+  /**
+   *
+   * @var integer
+   */
+  protected $limit = 10;
+  
+  /**
+   *
+   * @var integer
+   */
+  protected $page = 0;
+  
+  /**
    * The messenger.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
@@ -43,12 +63,24 @@ class ManagerRatingApp {
    *
    * @var string
    */
-  protected static $like_comment = 'like_comment';
+  protected $note;
   /**
    *
    * @var string
    */
-  protected static $dislike_comment = 'dislike_comment';
+  protected static $vote_type__like_comment = 'like_comment';
+  /**
+   *
+   * @var string
+   */
+  protected static $vote_type__dislike_comment = 'dislike_comment';
+  /**
+   * La valeur reelle varie de de 1 à 5.
+   * ( example : note_1 ).
+   *
+   * @var string
+   */
+  protected static $vote_type__comment_note = 'note_';
   
   /**
    *
@@ -67,9 +99,13 @@ class ManagerRatingApp {
    * @param string $entity_type_id
    * @param mixed $entity_id
    */
-  function getAppReviews($entity_type_id, $entity_id) {
+  function getAppReviews($entity_type_id, $entity_id, $field_name, $limit, $page, $note) {
     $this->entity_type_id = $entity_type_id;
     $this->entity_id = $entity_id;
+    $this->field_comment_name = $field_name;
+    $this->limit = $limit;
+    $this->page = $page - 1;
+    $this->note = $note;
     return [
       'reviews' => $this->getReviews(),
       'summary' => $this->getSummary(),
@@ -89,31 +125,60 @@ class ManagerRatingApp {
    * @return string[]|number[]
    */
   protected function getReviews() {
-    $query = $this->EntityTypeManager->getStorage('comment')->getQuery();
-    $query->condition('entity_type', $this->entity_type_id);
-    $query->condition('entity_id', $this->entity_id);
-    $query->accessCheck(true);
-    $query->sort('created', 'DESC');
-    $ids = $query->execute();
+    $start = $this->page * $this->limit;
+    $ids = [];
+    if ($this->note) {
+      $query = $this->database->select('comment_field_data', 'v')->fields('v', [
+        'cid'
+      ]);
+      $query->condition('v.entity_type', $this->entity_type_id);
+      $query->condition('v.entity_id', $this->entity_id);
+      $query->orderBy('v.created', 'DESC');
+      $query->range($start, $this->limit);
+      //
+      $query->addJoin('INNER', 'votingapi_vote', 'vtv', 'vtv.rating_app_comment_id=v.cid');
+      $query->condition('vtv.type', self::$vote_type__comment_note . $this->note);
+      $results = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+      foreach ($results as $row) {
+        $ids[$row['cid']] = $row['cid'];
+      }
+    }
+    else {
+      $query = $this->EntityTypeManager->getStorage('comment')->getQuery();
+      $query->condition('entity_type', $this->entity_type_id);
+      $query->condition('entity_id', $this->entity_id);
+      $query->accessCheck(true);
+      $query->sort('created', 'DESC');
+      $query->range($start, $this->limit);
+      $ids = $query->execute();
+    }
+    \Stephane888\Debug\debugLog::kintDebugDrupal([
+      'ids' => $ids,
+      'start' => $start,
+      'limit' => $this->limit,
+      'note' => $this->note
+    ], 'getReviews');
     $comments = [];
     if ($ids) {
       $entities = $this->EntityTypeManager->getStorage('comment')->loadMultiple($ids);
       foreach ($entities as $entity) {
+        $id = $entity->id();
+        $bundle = $entity->bundle();
         /**
          *
          * @var \Drupal\comment\Entity\Comment $entity
          */
         $comments[] = [
-          'id' => $entity->id(),
+          'id' => $id,
           'product_handler' => '', // ??
           'name' => $entity->getAuthorName(),
           'title' => $entity->getSubject(),
           'email' => $entity->getAuthorEmail(), // ?
           'description' => $entity->get('comment_body')->value,
           'reponse' => '', // doit etre un array.
-          'note' => 4.5,
-          'likes' => $this->getLikesDislikes(self::$like_comment, $entity->bundle(), $entity->id()),
-          'dislikes' => $this->getLikesDislikes(self::$dislike_comment, $entity->bundle(), $entity->id()),
+          'note' => $this->getNotes($id),
+          'likes' => $this->getLikesDislikes(self::$vote_type__like_comment, $bundle, $id),
+          'dislikes' => $this->getLikesDislikes(self::$vote_type__dislike_comment, $bundle, $id),
           'surname' => '',
           'created_at' => $entity->getCreatedTime(),
           'status_user_text' => 'Acheteur vérifié...',
@@ -129,22 +194,85 @@ class ManagerRatingApp {
    * @return number[]
    */
   protected function getSummary() {
+    $entity = $this->EntityTypeManager->getStorage($this->entity_type_id)->load($this->entity_id);
+    
     return [
-      'note_5' => 5,
-      'note_4' => 4,
-      'note_3' => 0,
-      'note_2' => 1,
-      'note_1' => 0
+      'note_5' => $this->getNotesByType(5),
+      'note_4' => $this->getNotesByType(4),
+      'note_3' => $this->getNotesByType(3),
+      'note_2' => $this->getNotesByType(2),
+      'note_1' => $this->getNotesByType(1)
     ];
+  }
+  
+  public function getNotesByType($note_type = 1) {
+    $type = self::$vote_type__comment_note . $note_type;
+    $results = [];
+    $result = $this->database->select('votingapi_result', 'v')->fields('v', [
+      'type',
+      'function',
+      'value'
+    ])->condition('entity_type', $this->entity_type_id)->condition('entity_id', $this->entity_id)->condition('type', $type)->execute();
+    while ($row = $result->fetchAssoc()) {
+      $results[$row['type']][$row['function']] = $row['value'];
+    }
+    if (!empty($results[$type])) {
+      return $results[$type]['vote_count'];
+    }
+    return 0;
+  }
+  
+  /**
+   *
+   * @param array $datas
+   * @return integer
+   */
+  public function addComment(array $datas) {
+    $comment = Comment::create($datas);
+    $comment->save();
+    return $comment->id();
+  }
+  
+  public function addNote(array $data) {
+    $vote_type_note = self::$vote_type__comment_note;
+    $note = (int) $data['value'];
+    $vote_type_note .= $note;
+    $vote = Vote::create([
+      'type' => $vote_type_note,
+      'entity_type' => $data['comment_type'],
+      'entity_id' => $data['comment_id'],
+      'value' => $data['value'],
+      'value_type' => $data['value_type'],
+      'user_id' => $data['user_id'],
+      'rating_app_comment_id' => $data['rating_app_comment_id'],
+      'vote_source' => \Drupal\votingapi\Entity\Vote::getCurrentIp()
+    ]);
+    $vote->save();
+    return $vote->id();
+  }
+  
+  /**
+   *
+   * @param integer $commentId
+   * @return number
+   */
+  public function getNotes($commentId) {
+    $result = $this->database->select('votingapi_vote', 'v')->fields('v', [
+      'value'
+    ])->condition('entity_type', $this->entity_type_id)->condition('entity_id', $this->entity_id)->condition('rating_app_comment_id', $commentId)->execute();
+    $row = $result->fetchAssoc();
+    if (isset($row['value']))
+      return (int) $row['value'];
+    return 0;
   }
   
   /**
    * Permet de sauvegarder le nombre de
    */
   public function LikeDislike(array $data) {
-    $type = self::$like_comment;
+    $type = self::$vote_type__like_comment;
     if ($data['value'] === -1)
-      $type = self::$dislike_comment;
+      $type = self::$vote_type__dislike_comment;
     $hasVote = $this->userHasLikeDislike($data);
     if ($hasVote) {
       // on supprime l'ancien vote de l'utilisateur.
@@ -199,8 +327,8 @@ class ManagerRatingApp {
   protected function userHasLikeDislike(array $data) {
     $query = $this->EntityTypeManager->getStorage('vote')->getQuery()->accessCheck(TRUE);
     $or = $query->orConditionGroup();
-    $or->condition('type', self::$like_comment);
-    $or->condition('type', self::$dislike_comment);
+    $or->condition('type', self::$vote_type__like_comment);
+    $or->condition('type', self::$vote_type__dislike_comment);
     $query->condition($or);
     $query->condition('entity_type', $data['comment_type']);
     $query->condition('entity_id', $data['comment_id']);

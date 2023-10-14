@@ -8,6 +8,7 @@ use Drupal\rating_app\Services\ManagerRatingApp;
 use Stephane888\DrupalUtility\HttpResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Stephane888\Debug\ExceptionDebug;
+use Stephane888\Debug\ExceptionExtractMessage;
 use Drupal\Component\Serialization\Json;
 
 /**
@@ -35,9 +36,50 @@ class RatingAppController extends ControllerBase {
   /**
    * Builds the response.
    */
-  public function getReviews($entity_type_id, $entity_id) {
-    $datas = $this->ManagerRatingApp->getAppReviews($entity_type_id, $entity_id);
+  public function getReviews(Request $Request, $entity_type_id, $entity_id, $field_name) {
+    $limit = $Request->query->get('limit', 10);
+    $page = $Request->query->get('page', 1);
+    $note = $Request->query->get('note');
+    $datas = $this->ManagerRatingApp->getAppReviews($entity_type_id, $entity_id, $field_name, $limit, $page, $note);
     return HttpResponse::response($datas);
+  }
+  
+  /**
+   *
+   * @param Request $Request
+   */
+  public function SaveReview(Request $Request, $entity_type_id, $entity_id) {
+    try {
+      $datas = Json::decode($Request->getContent());
+      if (!empty($datas['form']['start']) && !empty($datas['form']['comment']) && !empty($datas['form']['comment_type']) && isset($datas['form']['titre'])) {
+        $uid = \Drupal::currentUser()->id();
+        $comment = [
+          'entity_type' => $entity_type_id,
+          'entity_id' => $entity_id,
+          'subject' => $datas['form']['titre'],
+          'uid' => $uid,
+          'comment_body' => $datas['form']['comment'],
+          'comment_type' => $datas['form']['comment_type'],
+          'field_name' => $datas['form']['field_name']
+        ];
+        $commentId = $this->ManagerRatingApp->addComment($comment);
+        
+        $start = [
+          'value' => $datas['form']['start'],
+          'comment_type' => $entity_type_id,
+          'comment_id' => $entity_id,
+          'rating_app_comment_id' => $commentId,
+          'value_type' => 'points',
+          'user_id' => $uid
+        ];
+        $result['note'] = $this->ManagerRatingApp->addNote($start);
+        return HttpResponse::response($result);
+      }
+      throw ExceptionDebug::exception("Some key not exist");
+    }
+    catch (\Exception $e) {
+      return HttpResponse::response(ExceptionExtractMessage::errorAll($e), 400, $e);
+    }
   }
   
   public function LikeDislikeReview(Request $Request, $entity_type_id, $entity_id) {
