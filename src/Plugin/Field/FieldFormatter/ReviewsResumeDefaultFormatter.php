@@ -84,10 +84,7 @@ class ReviewsResumeDefaultFormatter extends CommentDefaultFormatter {
             'data-entity-id' => $items->getEntity()->id(),
             'data-entity-type-id' => $items->getEntity()->getEntityTypeId(),
             'data-url-get-reviews' => "/" . $urlGetReviews->getInternalPath(),
-            'data-add_comment' => "/" . $urlAddComment->getInternalPath(),
-            'class' => [
-              'rating-app-reviews'
-            ]
+            'data-add_comment' => "/" . $urlAddComment->getInternalPath()
           ]
         ],
         'comment_form' => NULL

@@ -150,9 +150,8 @@ class ManagerRatingApp {
       }
     }
     return [
-      'count' => $val,
-      'percent' => $val / $nbre * 20, // pour avoir un resulta sur 100.
-      'nbre' => $nbre
+      'count' => $nbre,
+      'percent' => $val / $nbre * 20 // pour avoir un resulta sur 100.
     ];
   }
   
