@@ -13,7 +13,7 @@ use Drupal\Component\Utility\Html;
  *
  * @FieldFormatter(
  *   id = "rating_app_reviews_resume_default",
- *   label = @Translation("Rating api formatter"),
+ *   label = @Translation("Rating api reviews"),
  *   field_types = {
  *     "comment"
  *   }
@@ -56,6 +56,7 @@ class ReviewsResumeDefaultFormatter extends CommentDefaultFormatter {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    // dump($items);
     $entity = $items->getEntity();
     $element = [];
     if (!$entity->isNew()) {
@@ -69,7 +70,7 @@ class ReviewsResumeDefaultFormatter extends CommentDefaultFormatter {
         'entity_id' => $entity->id()
       ]);
       $comment_type = $this->getFieldSetting('comment_type');
-      $id = Html::getUniqueId('rating-app-reviews');
+      $id = Html::getUniqueId('rating-app-start');
       $element[] = [
         // add additionnal information
         '#comment_type' => $comment_type,
@@ -77,24 +78,30 @@ class ReviewsResumeDefaultFormatter extends CommentDefaultFormatter {
         'comments' => [
           '#type' => 'html_tag',
           '#tag' => 'div',
+          '#value' => $this->t('Loading ...'),
           '#attributes' => [
             'id' => $id,
             'data-entity-id' => $items->getEntity()->id(),
             'data-entity-type-id' => $items->getEntity()->getEntityTypeId(),
             'data-url-get-reviews' => "/" . $urlGetReviews->getInternalPath(),
-            'data-add_comment' => "/" . $urlAddComment->getInternalPath()
+            'data-add_comment' => "/" . $urlAddComment->getInternalPath(),
+            'class' => [
+              'rating-app-reviews'
+            ]
           ]
         ],
         'comment_form' => NULL
       ];
       // dump($items->getName());
       $element['#attached']['drupalSettings']['rating_app'] = [
-        'field_name' => $items->getName(),
-        'comment_type' => $comment_type,
-        'entity_id' => $items->getEntity()->id(),
-        'entity_type_id' => $items->getEntity()->getEntityTypeId(),
-        'id' => $id
-      ] + $this->getSettings();
+        'review' => [
+          'field_name' => $items->getName(),
+          'comment_type' => $comment_type,
+          'entity_id' => $items->getEntity()->id(),
+          'entity_type_id' => $items->getEntity()->getEntityTypeId(),
+          'id' => $id
+        ] + $this->getSettings()
+      ];
       $element['#attached']['library'][] = 'rating_app/reviews_resume';
     }
     

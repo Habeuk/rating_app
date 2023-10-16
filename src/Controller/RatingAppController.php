@@ -44,6 +44,11 @@ class RatingAppController extends ControllerBase {
     return HttpResponse::response($datas);
   }
   
+  public function getStart(Request $Request, $entity_type_id, $entity_id, $field_name) {
+    $datas = $this->ManagerRatingApp->getstartAverage($entity_type_id, $entity_id, $field_name);
+    return HttpResponse::response($datas);
+  }
+  
   /**
    *
    * @param Request $Request

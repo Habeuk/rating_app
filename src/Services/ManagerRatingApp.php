@@ -122,6 +122,42 @@ class ManagerRatingApp {
   
   /**
    *
+   * @param string $entity_type_id
+   * @param mixed $entity_id
+   */
+  function getstartAverage($entity_type_id, $entity_id, $field_name) {
+    $this->entity_type_id = $entity_type_id;
+    $this->entity_id = $entity_id;
+    $this->field_comment_name = $field_name;
+    //
+    $query = $this->database->select('votingapi_vote', 'v')->fields('v', [
+      'value'
+    ])->condition('entity_type', $this->entity_type_id)->condition('entity_id', $this->entity_id);
+    $or = $query->orConditionGroup();
+    $or->condition('type', self::$vote_type__comment_note . '1');
+    $or->condition('type', self::$vote_type__comment_note . '2');
+    $or->condition('type', self::$vote_type__comment_note . '3');
+    $or->condition('type', self::$vote_type__comment_note . '4');
+    $or->condition('type', self::$vote_type__comment_note . '5');
+    $query->condition($or);
+    $result = $query->execute();
+    $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+    $nbre = count($rows);
+    $val = 0;
+    if ($rows) {
+      foreach ($rows as $row) {
+        $val += $row['value'];
+      }
+    }
+    return [
+      'count' => $val,
+      'percent' => $val / $nbre * 20, // pour avoir un resulta sur 100.
+      'nbre' => $nbre
+    ];
+  }
+  
+  /**
+   *
    * @return string[]|number[]
    */
   protected function getReviews() {

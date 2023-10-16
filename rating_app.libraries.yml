@@ -17,6 +17,16 @@ reviews_resume:
   dependencies:
     - rating_app/vuejs_dev
     - core/drupalSettings
+    
+reviews_start:
+  js:
+    StarsApp/ratingStars.umd.js: { attributes: { type: 'text/javascript'} }
+  css:
+    component:
+      StarsApp/style.css: {}
+  dependencies:
+    - rating_app/vuejs_dev
+    - core/drupalSettings
 
 # Third-party library (CDN).
 vuejs_dev:
