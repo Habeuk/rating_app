@@ -1,5 +1,5 @@
-import { ref as ze, createVNode as A, h as K, createApp as ue } from "vue";
-function Re(e, t) {
+import { ref as ze, createVNode as R, h as K, createApp as ue } from "vue";
+function Oe(e, t) {
   return function() {
     return e.apply(t, arguments);
   };
@@ -7,16 +7,16 @@ function Re(e, t) {
 const { toString: $e } = Object.prototype, { getPrototypeOf: oe } = Object, v = ((e) => (t) => {
   const n = $e.call(t);
   return e[n] || (e[n] = n.slice(8, -1).toLowerCase());
-})(/* @__PURE__ */ Object.create(null)), T = (e) => (e = e.toLowerCase(), (t) => v(t) === e), J = (e) => (t) => typeof t === e, { isArray: D } = Array, L = J("undefined");
+})(/* @__PURE__ */ Object.create(null)), T = (e) => (e = e.toLowerCase(), (t) => v(t) === e), J = (e) => (t) => typeof t === e, { isArray: _ } = Array, L = J("undefined");
 function Ve(e) {
   return e !== null && !L(e) && e.constructor !== null && !L(e.constructor) && b(e.constructor.isBuffer) && e.constructor.isBuffer(e);
 }
-const Ae = T("ArrayBuffer");
+const Re = T("ArrayBuffer");
 function We(e) {
   let t;
-  return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? t = ArrayBuffer.isView(e) : t = e && e.buffer && Ae(e.buffer), t;
+  return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? t = ArrayBuffer.isView(e) : t = e && e.buffer && Re(e.buffer), t;
 }
-const Ke = J("string"), b = J("function"), xe = J("number"), z = (e) => e !== null && typeof e == "object", Ge = (e) => e === !0 || e === !1, k = (e) => {
+const Ke = J("string"), b = J("function"), xe = J("number"), z = (e) => e !== null && typeof e == "object", Ge = (e) => e === !0 || e === !1, I = (e) => {
   if (v(e) !== "object")
     return !1;
   const t = oe(e);
@@ -26,18 +26,18 @@ const Ke = J("string"), b = J("function"), xe = J("number"), z = (e) => e !== nu
   return e && (typeof FormData == "function" && e instanceof FormData || b(e.append) && ((t = v(e)) === "formdata" || // detect form-data instance
   t === "object" && b(e.toString) && e.toString() === "[object FormData]"));
 }, nt = T("URLSearchParams"), rt = (e) => e.trim ? e.trim() : e.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
-function _(e, t, { allOwnKeys: n = !1 } = {}) {
+function F(e, t, { allOwnKeys: n = !1 } = {}) {
   if (e === null || typeof e > "u")
     return;
   let r, s;
-  if (typeof e != "object" && (e = [e]), D(e))
+  if (typeof e != "object" && (e = [e]), _(e))
     for (r = 0, s = e.length; r < s; r++)
       t.call(null, e[r], r, e);
   else {
     const o = n ? Object.getOwnPropertyNames(e) : Object.keys(e), i = o.length;
-    let l;
+    let c;
     for (r = 0; r < i; r++)
-      l = o[r], t.call(null, e[l], l, e);
+      c = o[r], t.call(null, e[c], c, e);
   }
 }
 function Ne(e, t) {
@@ -53,26 +53,26 @@ const Ce = (() => typeof globalThis < "u" ? globalThis : typeof self < "u" ? sel
 function ee() {
   const { caseless: e } = Pe(this) && this || {}, t = {}, n = (r, s) => {
     const o = e && Ne(t, s) || s;
-    k(t[o]) && k(r) ? t[o] = ee(t[o], r) : k(r) ? t[o] = ee({}, r) : D(r) ? t[o] = r.slice() : t[o] = r;
+    I(t[o]) && I(r) ? t[o] = ee(t[o], r) : I(r) ? t[o] = ee({}, r) : _(r) ? t[o] = r.slice() : t[o] = r;
   };
   for (let r = 0, s = arguments.length; r < s; r++)
-    arguments[r] && _(arguments[r], n);
+    arguments[r] && F(arguments[r], n);
   return t;
 }
-const st = (e, t, n, { allOwnKeys: r } = {}) => (_(t, (s, o) => {
-  n && b(s) ? e[o] = Re(s, n) : e[o] = s;
+const st = (e, t, n, { allOwnKeys: r } = {}) => (F(t, (s, o) => {
+  n && b(s) ? e[o] = Oe(s, n) : e[o] = s;
 }, { allOwnKeys: r }), e), ot = (e) => (e.charCodeAt(0) === 65279 && (e = e.slice(1)), e), it = (e, t, n, r) => {
   e.prototype = Object.create(t.prototype, r), e.prototype.constructor = e, Object.defineProperty(e, "super", {
     value: t.prototype
   }), n && Object.assign(e.prototype, n);
 }, at = (e, t, n, r) => {
   let s, o, i;
-  const l = {};
+  const c = {};
   if (t = t || {}, e == null)
     return t;
   do {
     for (s = Object.getOwnPropertyNames(e), o = s.length; o-- > 0; )
-      i = s[o], (!r || r(i, e, t)) && !l[i] && (t[i] = e[i], l[i] = !0);
+      i = s[o], (!r || r(i, e, t)) && !c[i] && (t[i] = e[i], c[i] = !0);
     e = n !== !1 && oe(e);
   } while (e && (!n || n(e, t)) && e !== Object.prototype);
   return t;
@@ -83,7 +83,7 @@ const st = (e, t, n, { allOwnKeys: r } = {}) => (_(t, (s, o) => {
 }, lt = (e) => {
   if (!e)
     return null;
-  if (D(e))
+  if (_(e))
     return e;
   let t = e.length;
   if (!xe(t))
@@ -110,13 +110,13 @@ const st = (e, t, n, { allOwnKeys: r } = {}) => (_(t, (s, o) => {
   function(n, r, s) {
     return r.toUpperCase() + s;
   }
-), fe = (({ hasOwnProperty: e }) => (t, n) => e.call(t, n))(Object.prototype), mt = T("RegExp"), De = (e, t) => {
+), fe = (({ hasOwnProperty: e }) => (t, n) => e.call(t, n))(Object.prototype), mt = T("RegExp"), _e = (e, t) => {
   const n = Object.getOwnPropertyDescriptors(e), r = {};
-  _(n, (s, o) => {
+  F(n, (s, o) => {
     t(s, o, e) !== !1 && (r[o] = s);
   }), Object.defineProperties(e, r);
 }, wt = (e) => {
-  De(e, (t, n) => {
+  _e(e, (t, n) => {
     if (b(e) && ["arguments", "caller", "callee"].indexOf(n) !== -1)
       return !1;
     const r = e[n];
@@ -136,20 +136,20 @@ const st = (e, t, n, { allOwnKeys: r } = {}) => (_(t, (s, o) => {
       n[o] = !0;
     });
   };
-  return D(e) ? r(e) : r(String(e).split(t)), n;
+  return _(e) ? r(e) : r(String(e).split(t)), n;
 }, gt = () => {
-}, bt = (e, t) => (e = +e, Number.isFinite(e) ? e : t), G = "abcdefghijklmnopqrstuvwxyz", de = "0123456789", Be = {
+}, bt = (e, t) => (e = +e, Number.isFinite(e) ? e : t), G = "abcdefghijklmnopqrstuvwxyz", de = "0123456789", De = {
   DIGIT: de,
   ALPHA: G,
   ALPHA_DIGIT: G + G.toUpperCase() + de
-}, Et = (e = 16, t = Be.ALPHA_DIGIT) => {
+}, St = (e = 16, t = De.ALPHA_DIGIT) => {
   let n = "";
   const { length: r } = t;
   for (; e--; )
     n += t[Math.random() * r | 0];
   return n;
 };
-function St(e) {
+function Et(e) {
   return !!(e && b(e.append) && e[Symbol.toStringTag] === "FormData" && e[Symbol.iterator]);
 }
 const Tt = (e) => {
@@ -159,19 +159,19 @@ const Tt = (e) => {
         return;
       if (!("toJSON" in r)) {
         t[s] = r;
-        const o = D(r) ? [] : {};
-        return _(r, (i, l) => {
+        const o = _(r) ? [] : {};
+        return F(r, (i, c) => {
           const d = n(i, s + 1);
-          !L(d) && (o[l] = d);
+          !L(d) && (o[c] = d);
         }), t[s] = void 0, o;
       }
     }
     return r;
   };
   return n(e, 0);
-}, Ot = T("AsyncFunction"), Rt = (e) => e && (z(e) || b(e)) && b(e.then) && b(e.catch), a = {
-  isArray: D,
-  isArrayBuffer: Ae,
+}, At = T("AsyncFunction"), Ot = (e) => e && (z(e) || b(e)) && b(e.then) && b(e.catch), a = {
+  isArray: _,
+  isArrayBuffer: Re,
   isBuffer: Ve,
   isFormData: tt,
   isArrayBufferView: We,
@@ -179,7 +179,7 @@ const Tt = (e) => {
   isNumber: xe,
   isBoolean: Ge,
   isObject: z,
-  isPlainObject: k,
+  isPlainObject: I,
   isUndefined: L,
   isDate: Xe,
   isFile: Ze,
@@ -190,7 +190,7 @@ const Tt = (e) => {
   isURLSearchParams: nt,
   isTypedArray: ut,
   isFileList: Ye,
-  forEach: _,
+  forEach: F,
   merge: ee,
   extend: st,
   trim: rt,
@@ -207,7 +207,7 @@ const Tt = (e) => {
   hasOwnProperty: fe,
   hasOwnProp: fe,
   // an alias to avoid ESLint no-prototype-builtins detection
-  reduceDescriptors: De,
+  reduceDescriptors: _e,
   freezeMethods: wt,
   toObjectSet: yt,
   toCamelCase: pt,
@@ -216,12 +216,12 @@ const Tt = (e) => {
   findKey: Ne,
   global: Ce,
   isContextDefined: Pe,
-  ALPHABET: Be,
-  generateString: Et,
-  isSpecCompliantForm: St,
+  ALPHABET: De,
+  generateString: St,
+  isSpecCompliantForm: Et,
   toJSONObject: Tt,
-  isAsyncFn: Ot,
-  isThenable: Rt
+  isAsyncFn: At,
+  isThenable: Ot
 };
 function m(e, t, n, r, s) {
   Error.call(this), Error.captureStackTrace ? Error.captureStackTrace(this, this.constructor) : this.stack = new Error().stack, this.message = e, this.name = "AxiosError", t && (this.code = t), n && (this.config = n), r && (this.request = r), s && (this.response = s);
@@ -247,7 +247,7 @@ a.inherits(m, Error, {
     };
   }
 });
-const Le = m.prototype, _e = {};
+const Le = m.prototype, Fe = {};
 [
   "ERR_BAD_OPTION_VALUE",
   "ERR_BAD_OPTION",
@@ -263,26 +263,26 @@ const Le = m.prototype, _e = {};
   "ERR_INVALID_URL"
   // eslint-disable-next-line func-names
 ].forEach((e) => {
-  _e[e] = { value: e };
+  Fe[e] = { value: e };
 });
-Object.defineProperties(m, _e);
+Object.defineProperties(m, Fe);
 Object.defineProperty(Le, "isAxiosError", { value: !0 });
 m.from = (e, t, n, r, s, o) => {
   const i = Object.create(Le);
   return a.toFlatObject(e, i, function(d) {
     return d !== Error.prototype;
-  }, (l) => l !== "isAxiosError"), m.call(i, e.message, t, n, r, s), i.cause = e, i.name = e.name, o && Object.assign(i, o), i;
+  }, (c) => c !== "isAxiosError"), m.call(i, e.message, t, n, r, s), i.cause = e, i.name = e.name, o && Object.assign(i, o), i;
 };
-const At = null;
+const Rt = null;
 function te(e) {
   return a.isPlainObject(e) || a.isArray(e);
 }
-function Fe(e) {
+function Be(e) {
   return a.endsWith(e, "[]") ? e.slice(0, -2) : e;
 }
 function he(e, t, n) {
   return e ? e.concat(t).map(function(s, o) {
-    return s = Fe(s), !n && o ? "[" + s + "]" : s;
+    return s = Be(s), !n && o ? "[" + s + "]" : s;
   }).join(n ? "." : "") : t;
 }
 function xt(e) {
@@ -298,13 +298,13 @@ function $(e, t, n) {
     metaTokens: !0,
     dots: !1,
     indexes: !1
-  }, !1, function(p, O) {
-    return !a.isUndefined(O[p]);
+  }, !1, function(p, A) {
+    return !a.isUndefined(A[p]);
   });
   const r = n.metaTokens, s = n.visitor || u, o = n.dots, i = n.indexes, d = (n.Blob || typeof Blob < "u" && Blob) && a.isSpecCompliantForm(t);
   if (!a.isFunction(s))
     throw new TypeError("visitor must be a function");
-  function c(f) {
+  function l(f) {
     if (f === null)
       return "";
     if (a.isDate(f))
@@ -313,39 +313,39 @@ function $(e, t, n) {
       throw new m("Blob is not supported. Use a Buffer instead.");
     return a.isArrayBuffer(f) || a.isTypedArray(f) ? d && typeof Blob == "function" ? new Blob([f]) : Buffer.from(f) : f;
   }
-  function u(f, p, O) {
-    let E = f;
-    if (f && !O && typeof f == "object") {
+  function u(f, p, A) {
+    let S = f;
+    if (f && !A && typeof f == "object") {
       if (a.endsWith(p, "{}"))
         p = r ? p : p.slice(0, -2), f = JSON.stringify(f);
-      else if (a.isArray(f) && xt(f) || (a.isFileList(f) || a.endsWith(p, "[]")) && (E = a.toArray(f)))
-        return p = Fe(p), E.forEach(function(U, Je) {
+      else if (a.isArray(f) && xt(f) || (a.isFileList(f) || a.endsWith(p, "[]")) && (S = a.toArray(f)))
+        return p = Be(p), S.forEach(function(U, Je) {
           !(a.isUndefined(U) || U === null) && t.append(
             // eslint-disable-next-line no-nested-ternary
             i === !0 ? he([p], Je, o) : i === null ? p : p + "[]",
-            c(U)
+            l(U)
           );
         }), !1;
     }
-    return te(f) ? !0 : (t.append(he(O, p, o), c(f)), !1);
+    return te(f) ? !0 : (t.append(he(A, p, o), l(f)), !1);
   }
   const h = [], g = Object.assign(Nt, {
     defaultVisitor: u,
-    convertValue: c,
+    convertValue: l,
     isVisitable: te
   });
   function w(f, p) {
     if (!a.isUndefined(f)) {
       if (h.indexOf(f) !== -1)
         throw Error("Circular reference detected in " + p.join("."));
-      h.push(f), a.forEach(f, function(E, N) {
-        (!(a.isUndefined(E) || E === null) && s.call(
+      h.push(f), a.forEach(f, function(S, N) {
+        (!(a.isUndefined(S) || S === null) && s.call(
           t,
-          E,
+          S,
           a.isString(N) ? N.trim() : N,
           p,
           g
-        )) === !0 && w(E, p ? p.concat(N) : [N]);
+        )) === !0 && w(S, p ? p.concat(N) : [N]);
       }), h.pop();
     }
   }
@@ -385,7 +385,7 @@ Ue.toString = function(t) {
 function Ct(e) {
   return encodeURIComponent(e).replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
 }
-function Ie(e, t, n) {
+function ke(e, t, n) {
   if (!t)
     return e;
   const r = n && n.encode || Ct, s = n && n.serialize;
@@ -450,36 +450,36 @@ class Pt {
     });
   }
 }
-const me = Pt, ke = {
+const me = Pt, Ie = {
   silentJSONParsing: !0,
   forcedJSONParsing: !0,
   clarifyTimeoutError: !1
-}, Dt = typeof URLSearchParams < "u" ? URLSearchParams : ie, Bt = typeof FormData < "u" ? FormData : null, Lt = typeof Blob < "u" ? Blob : null, _t = (() => {
+}, _t = typeof URLSearchParams < "u" ? URLSearchParams : ie, Dt = typeof FormData < "u" ? FormData : null, Lt = typeof Blob < "u" ? Blob : null, Ft = (() => {
   let e;
   return typeof navigator < "u" && ((e = navigator.product) === "ReactNative" || e === "NativeScript" || e === "NS") ? !1 : typeof window < "u" && typeof document < "u";
-})(), Ft = (() => typeof WorkerGlobalScope < "u" && // eslint-disable-next-line no-undef
-self instanceof WorkerGlobalScope && typeof self.importScripts == "function")(), S = {
+})(), Bt = (() => typeof WorkerGlobalScope < "u" && // eslint-disable-next-line no-undef
+self instanceof WorkerGlobalScope && typeof self.importScripts == "function")(), E = {
   isBrowser: !0,
   classes: {
-    URLSearchParams: Dt,
-    FormData: Bt,
+    URLSearchParams: _t,
+    FormData: Dt,
     Blob: Lt
   },
-  isStandardBrowserEnv: _t,
-  isStandardBrowserWebWorkerEnv: Ft,
+  isStandardBrowserEnv: Ft,
+  isStandardBrowserWebWorkerEnv: Bt,
   protocols: ["http", "https", "file", "blob", "url", "data"]
 };
 function Ut(e, t) {
-  return $(e, new S.classes.URLSearchParams(), Object.assign({
+  return $(e, new E.classes.URLSearchParams(), Object.assign({
     visitor: function(n, r, s, o) {
-      return S.isNode && a.isBuffer(n) ? (this.append(r, n.toString("base64")), !1) : o.defaultVisitor.apply(this, arguments);
+      return E.isNode && a.isBuffer(n) ? (this.append(r, n.toString("base64")), !1) : o.defaultVisitor.apply(this, arguments);
     }
   }, t));
 }
-function It(e) {
+function kt(e) {
   return a.matchAll(/\w+|\[(\w*)]/g, e).map((t) => t[0] === "[]" ? "" : t[1] || t[0]);
 }
-function kt(e) {
+function It(e) {
   const t = {}, n = Object.keys(e);
   let r;
   const s = n.length;
@@ -491,13 +491,13 @@ function kt(e) {
 function je(e) {
   function t(n, r, s, o) {
     let i = n[o++];
-    const l = Number.isFinite(+i), d = o >= n.length;
-    return i = !i && a.isArray(s) ? s.length : i, d ? (a.hasOwnProp(s, i) ? s[i] = [s[i], r] : s[i] = r, !l) : ((!s[i] || !a.isObject(s[i])) && (s[i] = []), t(n, r, s[i], o) && a.isArray(s[i]) && (s[i] = kt(s[i])), !l);
+    const c = Number.isFinite(+i), d = o >= n.length;
+    return i = !i && a.isArray(s) ? s.length : i, d ? (a.hasOwnProp(s, i) ? s[i] = [s[i], r] : s[i] = r, !c) : ((!s[i] || !a.isObject(s[i])) && (s[i] = []), t(n, r, s[i], o) && a.isArray(s[i]) && (s[i] = It(s[i])), !c);
   }
   if (a.isFormData(e) && a.isFunction(e.entries)) {
     const n = {};
     return a.forEachEntry(e, (r, s) => {
-      t(It(r), s, n, 0);
+      t(kt(r), s, n, 0);
     }), n;
   }
   return null;
@@ -505,7 +505,7 @@ function je(e) {
 const jt = {
   "Content-Type": void 0
 };
-function Ht(e, t, n) {
+function qt(e, t, n) {
   if (a.isString(e))
     try {
       return (t || JSON.parse)(e), a.trim(e);
@@ -516,7 +516,7 @@ function Ht(e, t, n) {
   return (n || JSON.stringify)(e);
 }
 const V = {
-  transitional: ke,
+  transitional: Ie,
   adapter: ["xhr", "http"],
   transformRequest: [function(t, n) {
     const r = n.getContentType() || "", s = r.indexOf("application/json") > -1, o = a.isObject(t);
@@ -528,20 +528,20 @@ const V = {
       return t.buffer;
     if (a.isURLSearchParams(t))
       return n.setContentType("application/x-www-form-urlencoded;charset=utf-8", !1), t.toString();
-    let l;
+    let c;
     if (o) {
       if (r.indexOf("application/x-www-form-urlencoded") > -1)
         return Ut(t, this.formSerializer).toString();
-      if ((l = a.isFileList(t)) || r.indexOf("multipart/form-data") > -1) {
+      if ((c = a.isFileList(t)) || r.indexOf("multipart/form-data") > -1) {
         const d = this.env && this.env.FormData;
         return $(
-          l ? { "files[]": t } : t,
+          c ? { "files[]": t } : t,
           d && new d(),
           this.formSerializer
         );
       }
     }
-    return o || s ? (n.setContentType("application/json", !1), Ht(t)) : t;
+    return o || s ? (n.setContentType("application/json", !1), qt(t)) : t;
   }],
   transformResponse: [function(t) {
     const n = this.transitional || V.transitional, r = n && n.forcedJSONParsing, s = this.responseType === "json";
@@ -549,9 +549,9 @@ const V = {
       const i = !(n && n.silentJSONParsing) && s;
       try {
         return JSON.parse(t);
-      } catch (l) {
+      } catch (c) {
         if (i)
-          throw l.name === "SyntaxError" ? m.from(l, m.ERR_BAD_RESPONSE, this, null, this.response) : l;
+          throw c.name === "SyntaxError" ? m.from(c, m.ERR_BAD_RESPONSE, this, null, this.response) : c;
       }
     }
     return t;
@@ -566,8 +566,8 @@ const V = {
   maxContentLength: -1,
   maxBodyLength: -1,
   env: {
-    FormData: S.classes.FormData,
-    Blob: S.classes.Blob
+    FormData: E.classes.FormData,
+    Blob: E.classes.Blob
   },
   validateStatus: function(t) {
     return t >= 200 && t < 300;
@@ -584,7 +584,7 @@ a.forEach(["delete", "get", "head"], function(t) {
 a.forEach(["post", "put", "patch"], function(t) {
   V.headers[t] = a.merge(jt);
 });
-const ae = V, qt = a.toObjectSet([
+const ae = V, Ht = a.toObjectSet([
   "age",
   "authorization",
   "content-length",
@@ -607,10 +607,10 @@ const ae = V, qt = a.toObjectSet([
   let n, r, s;
   return e && e.split(`
 `).forEach(function(i) {
-    s = i.indexOf(":"), n = i.substring(0, s).trim().toLowerCase(), r = i.substring(s + 1).trim(), !(!n || t[n] && qt[n]) && (n === "set-cookie" ? t[n] ? t[n].push(r) : t[n] = [r] : t[n] = t[n] ? t[n] + ", " + r : r);
+    s = i.indexOf(":"), n = i.substring(0, s).trim().toLowerCase(), r = i.substring(s + 1).trim(), !(!n || t[n] && Ht[n]) && (n === "set-cookie" ? t[n] ? t[n].push(r) : t[n] = [r] : t[n] = t[n] ? t[n] + ", " + r : r);
   }), t;
 }, we = Symbol("internals");
-function B(e) {
+function D(e) {
   return e && String(e).trim().toLowerCase();
 }
 function j(e) {
@@ -654,18 +654,18 @@ class W {
   }
   set(t, n, r) {
     const s = this;
-    function o(l, d, c) {
-      const u = B(d);
+    function o(c, d, l) {
+      const u = D(d);
       if (!u)
         throw new Error("header name must be a non-empty string");
       const h = a.findKey(s, u);
-      (!h || s[h] === void 0 || c === !0 || c === void 0 && s[h] !== !1) && (s[h || d] = j(l));
+      (!h || s[h] === void 0 || l === !0 || l === void 0 && s[h] !== !1) && (s[h || d] = j(c));
     }
-    const i = (l, d) => a.forEach(l, (c, u) => o(c, u, d));
+    const i = (c, d) => a.forEach(c, (l, u) => o(l, u, d));
     return a.isPlainObject(t) || t instanceof this.constructor ? i(t, n) : a.isString(t) && (t = t.trim()) && !Jt(t) ? i(Mt(t), n) : t != null && o(n, t, r), this;
   }
   get(t, n) {
-    if (t = B(t), t) {
+    if (t = D(t), t) {
       const r = a.findKey(this, t);
       if (r) {
         const s = this[r];
@@ -682,7 +682,7 @@ class W {
     }
   }
   has(t, n) {
-    if (t = B(t), t) {
+    if (t = D(t), t) {
       const r = a.findKey(this, t);
       return !!(r && this[r] !== void 0 && (!n || X(this, this[r], r, n)));
     }
@@ -692,9 +692,9 @@ class W {
     const r = this;
     let s = !1;
     function o(i) {
-      if (i = B(i), i) {
-        const l = a.findKey(r, i);
-        l && (!n || X(r, r[l], l, n)) && (delete r[l], s = !0);
+      if (i = D(i), i) {
+        const c = a.findKey(r, i);
+        c && (!n || X(r, r[c], c, n)) && (delete r[c], s = !0);
       }
     }
     return a.isArray(t) ? t.forEach(o) : o(t), s;
@@ -716,8 +716,8 @@ class W {
         n[i] = j(s), delete n[o];
         return;
       }
-      const l = t ? zt(o) : String(o).trim();
-      l !== o && delete n[o], n[l] = j(s), r[l] = !0;
+      const c = t ? zt(o) : String(o).trim();
+      c !== o && delete n[o], n[c] = j(s), r[c] = !0;
     }), this;
   }
   concat(...t) {
@@ -751,8 +751,8 @@ class W {
       accessors: {}
     }).accessors, s = this.prototype;
     function o(i) {
-      const l = B(i);
-      r[l] || ($t(s, i), r[l] = !0);
+      const c = D(i);
+      r[c] || ($t(s, i), r[c] = !0);
     }
     return a.isArray(t) ? t.forEach(o) : o(t), this;
   }
@@ -760,21 +760,21 @@ class W {
 W.accessor(["Content-Type", "Content-Length", "Accept", "Accept-Encoding", "User-Agent", "Authorization"]);
 a.freezeMethods(W.prototype);
 a.freezeMethods(W);
-const R = W;
+const O = W;
 function Z(e, t) {
-  const n = this || ae, r = t || n, s = R.from(r.headers);
+  const n = this || ae, r = t || n, s = O.from(r.headers);
   let o = r.data;
-  return a.forEach(e, function(l) {
-    o = l.call(n, o, s.normalize(), t ? t.status : void 0);
+  return a.forEach(e, function(c) {
+    o = c.call(n, o, s.normalize(), t ? t.status : void 0);
   }), s.normalize(), o;
 }
-function He(e) {
+function qe(e) {
   return !!(e && e.__CANCEL__);
 }
-function F(e, t, n) {
+function B(e, t, n) {
   m.call(this, e ?? "canceled", m.ERR_CANCELED, t, n), this.name = "CanceledError";
 }
-a.inherits(F, m, {
+a.inherits(B, m, {
   __CANCEL__: !0
 });
 function Vt(e, t, n) {
@@ -787,13 +787,13 @@ function Vt(e, t, n) {
     n
   ));
 }
-const Wt = S.isStandardBrowserEnv ? (
+const Wt = E.isStandardBrowserEnv ? (
   // Standard browser envs support document.cookie
   function() {
     return {
-      write: function(n, r, s, o, i, l) {
+      write: function(n, r, s, o, i, c) {
         const d = [];
-        d.push(n + "=" + encodeURIComponent(r)), a.isNumber(s) && d.push("expires=" + new Date(s).toGMTString()), a.isString(o) && d.push("path=" + o), a.isString(i) && d.push("domain=" + i), l === !0 && d.push("secure"), document.cookie = d.join("; ");
+        d.push(n + "=" + encodeURIComponent(r)), a.isNumber(s) && d.push("expires=" + new Date(s).toGMTString()), a.isString(o) && d.push("path=" + o), a.isString(i) && d.push("domain=" + i), c === !0 && d.push("secure"), document.cookie = d.join("; ");
       },
       read: function(n) {
         const r = document.cookie.match(new RegExp("(^|;\\s*)(" + n + ")=([^;]*)"));
@@ -824,10 +824,10 @@ function Kt(e) {
 function Gt(e, t) {
   return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;
 }
-function qe(e, t) {
+function He(e, t) {
   return e && !Kt(t) ? Gt(e, t) : t;
 }
-const Xt = S.isStandardBrowserEnv ? (
+const Xt = E.isStandardBrowserEnv ? (
   // Standard browser envs have full support of the APIs needed to test
   // whether the request URL is of the same origin as current location.
   function() {
@@ -847,8 +847,8 @@ const Xt = S.isStandardBrowserEnv ? (
       };
     }
     return r = s(window.location.href), function(i) {
-      const l = a.isString(i) ? s(i) : i;
-      return l.protocol === r.protocol && l.host === r.host;
+      const c = a.isString(i) ? s(i) : i;
+      return c.protocol === r.protocol && c.host === r.host;
     };
   }()
 ) : (
@@ -868,14 +868,14 @@ function Qt(e, t) {
   const n = new Array(e), r = new Array(e);
   let s = 0, o = 0, i;
   return t = t !== void 0 ? t : 1e3, function(d) {
-    const c = Date.now(), u = r[o];
-    i || (i = c), n[s] = d, r[s] = c;
+    const l = Date.now(), u = r[o];
+    i || (i = l), n[s] = d, r[s] = l;
     let h = o, g = 0;
     for (; h !== s; )
       g += n[h++], h = h % e;
-    if (s = (s + 1) % e, s === o && (o = (o + 1) % e), c - i < t)
+    if (s = (s + 1) % e, s === o && (o = (o + 1) % e), l - i < t)
       return;
-    const w = u && c - u;
+    const w = u && l - u;
     return w ? Math.round(g * 1e3 / w) : void 0;
   };
 }
@@ -883,15 +883,15 @@ function ye(e, t) {
   let n = 0;
   const r = Qt(50, 250);
   return (s) => {
-    const o = s.loaded, i = s.lengthComputable ? s.total : void 0, l = o - n, d = r(l), c = o <= i;
+    const o = s.loaded, i = s.lengthComputable ? s.total : void 0, c = o - n, d = r(c), l = o <= i;
     n = o;
     const u = {
       loaded: o,
       total: i,
       progress: i ? o / i : void 0,
-      bytes: l,
+      bytes: c,
       rate: d || void 0,
-      estimated: d && i && c ? (i - o) / d : void 0,
+      estimated: d && i && l ? (i - o) / d : void 0,
       event: s
     };
     u[t ? "download" : "upload"] = !0, e(u);
@@ -900,74 +900,74 @@ function ye(e, t) {
 const Yt = typeof XMLHttpRequest < "u", en = Yt && function(e) {
   return new Promise(function(n, r) {
     let s = e.data;
-    const o = R.from(e.headers).normalize(), i = e.responseType;
-    let l;
+    const o = O.from(e.headers).normalize(), i = e.responseType;
+    let c;
     function d() {
-      e.cancelToken && e.cancelToken.unsubscribe(l), e.signal && e.signal.removeEventListener("abort", l);
+      e.cancelToken && e.cancelToken.unsubscribe(c), e.signal && e.signal.removeEventListener("abort", c);
     }
-    a.isFormData(s) && (S.isStandardBrowserEnv || S.isStandardBrowserWebWorkerEnv ? o.setContentType(!1) : o.setContentType("multipart/form-data;", !1));
-    let c = new XMLHttpRequest();
+    a.isFormData(s) && (E.isStandardBrowserEnv || E.isStandardBrowserWebWorkerEnv ? o.setContentType(!1) : o.setContentType("multipart/form-data;", !1));
+    let l = new XMLHttpRequest();
     if (e.auth) {
       const w = e.auth.username || "", f = e.auth.password ? unescape(encodeURIComponent(e.auth.password)) : "";
       o.set("Authorization", "Basic " + btoa(w + ":" + f));
     }
-    const u = qe(e.baseURL, e.url);
-    c.open(e.method.toUpperCase(), Ie(u, e.params, e.paramsSerializer), !0), c.timeout = e.timeout;
+    const u = He(e.baseURL, e.url);
+    l.open(e.method.toUpperCase(), ke(u, e.params, e.paramsSerializer), !0), l.timeout = e.timeout;
     function h() {
-      if (!c)
+      if (!l)
         return;
-      const w = R.from(
-        "getAllResponseHeaders" in c && c.getAllResponseHeaders()
+      const w = O.from(
+        "getAllResponseHeaders" in l && l.getAllResponseHeaders()
       ), p = {
-        data: !i || i === "text" || i === "json" ? c.responseText : c.response,
-        status: c.status,
-        statusText: c.statusText,
+        data: !i || i === "text" || i === "json" ? l.responseText : l.response,
+        status: l.status,
+        statusText: l.statusText,
         headers: w,
         config: e,
-        request: c
+        request: l
       };
-      Vt(function(E) {
-        n(E), d();
-      }, function(E) {
-        r(E), d();
-      }, p), c = null;
+      Vt(function(S) {
+        n(S), d();
+      }, function(S) {
+        r(S), d();
+      }, p), l = null;
     }
-    if ("onloadend" in c ? c.onloadend = h : c.onreadystatechange = function() {
-      !c || c.readyState !== 4 || c.status === 0 && !(c.responseURL && c.responseURL.indexOf("file:") === 0) || setTimeout(h);
-    }, c.onabort = function() {
-      c && (r(new m("Request aborted", m.ECONNABORTED, e, c)), c = null);
-    }, c.onerror = function() {
-      r(new m("Network Error", m.ERR_NETWORK, e, c)), c = null;
-    }, c.ontimeout = function() {
+    if ("onloadend" in l ? l.onloadend = h : l.onreadystatechange = function() {
+      !l || l.readyState !== 4 || l.status === 0 && !(l.responseURL && l.responseURL.indexOf("file:") === 0) || setTimeout(h);
+    }, l.onabort = function() {
+      l && (r(new m("Request aborted", m.ECONNABORTED, e, l)), l = null);
+    }, l.onerror = function() {
+      r(new m("Network Error", m.ERR_NETWORK, e, l)), l = null;
+    }, l.ontimeout = function() {
       let f = e.timeout ? "timeout of " + e.timeout + "ms exceeded" : "timeout exceeded";
-      const p = e.transitional || ke;
+      const p = e.transitional || Ie;
       e.timeoutErrorMessage && (f = e.timeoutErrorMessage), r(new m(
         f,
         p.clarifyTimeoutError ? m.ETIMEDOUT : m.ECONNABORTED,
         e,
-        c
-      )), c = null;
-    }, S.isStandardBrowserEnv) {
+        l
+      )), l = null;
+    }, E.isStandardBrowserEnv) {
       const w = (e.withCredentials || Xt(u)) && e.xsrfCookieName && Wt.read(e.xsrfCookieName);
       w && o.set(e.xsrfHeaderName, w);
     }
-    s === void 0 && o.setContentType(null), "setRequestHeader" in c && a.forEach(o.toJSON(), function(f, p) {
-      c.setRequestHeader(p, f);
-    }), a.isUndefined(e.withCredentials) || (c.withCredentials = !!e.withCredentials), i && i !== "json" && (c.responseType = e.responseType), typeof e.onDownloadProgress == "function" && c.addEventListener("progress", ye(e.onDownloadProgress, !0)), typeof e.onUploadProgress == "function" && c.upload && c.upload.addEventListener("progress", ye(e.onUploadProgress)), (e.cancelToken || e.signal) && (l = (w) => {
-      c && (r(!w || w.type ? new F(null, e, c) : w), c.abort(), c = null);
-    }, e.cancelToken && e.cancelToken.subscribe(l), e.signal && (e.signal.aborted ? l() : e.signal.addEventListener("abort", l)));
+    s === void 0 && o.setContentType(null), "setRequestHeader" in l && a.forEach(o.toJSON(), function(f, p) {
+      l.setRequestHeader(p, f);
+    }), a.isUndefined(e.withCredentials) || (l.withCredentials = !!e.withCredentials), i && i !== "json" && (l.responseType = e.responseType), typeof e.onDownloadProgress == "function" && l.addEventListener("progress", ye(e.onDownloadProgress, !0)), typeof e.onUploadProgress == "function" && l.upload && l.upload.addEventListener("progress", ye(e.onUploadProgress)), (e.cancelToken || e.signal) && (c = (w) => {
+      l && (r(!w || w.type ? new B(null, e, l) : w), l.abort(), l = null);
+    }, e.cancelToken && e.cancelToken.subscribe(c), e.signal && (e.signal.aborted ? c() : e.signal.addEventListener("abort", c)));
     const g = Zt(u);
-    if (g && S.protocols.indexOf(g) === -1) {
+    if (g && E.protocols.indexOf(g) === -1) {
       r(new m("Unsupported protocol " + g + ":", m.ERR_BAD_REQUEST, e));
       return;
     }
-    c.send(s || null);
+    l.send(s || null);
   });
-}, H = {
-  http: At,
+}, q = {
+  http: Rt,
   xhr: en
 };
-a.forEach(H, (e, t) => {
+a.forEach(q, (e, t) => {
   if (e) {
     try {
       Object.defineProperty(e, "name", { value: t });
@@ -981,27 +981,27 @@ const tn = {
     e = a.isArray(e) ? e : [e];
     const { length: t } = e;
     let n, r;
-    for (let s = 0; s < t && (n = e[s], !(r = a.isString(n) ? H[n.toLowerCase()] : n)); s++)
+    for (let s = 0; s < t && (n = e[s], !(r = a.isString(n) ? q[n.toLowerCase()] : n)); s++)
       ;
     if (!r)
       throw r === !1 ? new m(
         `Adapter ${n} is not supported by the environment`,
         "ERR_NOT_SUPPORT"
       ) : new Error(
-        a.hasOwnProp(H, n) ? `Adapter '${n}' is not available in the build` : `Unknown adapter '${n}'`
+        a.hasOwnProp(q, n) ? `Adapter '${n}' is not available in the build` : `Unknown adapter '${n}'`
       );
     if (!a.isFunction(r))
       throw new TypeError("adapter is not a function");
     return r;
   },
-  adapters: H
+  adapters: q
 };
 function Q(e) {
   if (e.cancelToken && e.cancelToken.throwIfRequested(), e.signal && e.signal.aborted)
-    throw new F(null, e);
+    throw new B(null, e);
 }
 function ge(e) {
-  return Q(e), e.headers = R.from(e.headers), e.data = Z.call(
+  return Q(e), e.headers = O.from(e.headers), e.data = Z.call(
     e,
     e.transformRequest
   ), ["post", "put", "patch"].indexOf(e.method) !== -1 && e.headers.setContentType("application/x-www-form-urlencoded", !1), tn.getAdapter(e.adapter || ae.adapter)(e).then(function(r) {
@@ -1009,45 +1009,45 @@ function ge(e) {
       e,
       e.transformResponse,
       r
-    ), r.headers = R.from(r.headers), r;
+    ), r.headers = O.from(r.headers), r;
   }, function(r) {
-    return He(r) || (Q(e), r && r.response && (r.response.data = Z.call(
+    return qe(r) || (Q(e), r && r.response && (r.response.data = Z.call(
       e,
       e.transformResponse,
       r.response
-    ), r.response.headers = R.from(r.response.headers))), Promise.reject(r);
+    ), r.response.headers = O.from(r.response.headers))), Promise.reject(r);
   });
 }
-const be = (e) => e instanceof R ? e.toJSON() : e;
+const be = (e) => e instanceof O ? e.toJSON() : e;
 function P(e, t) {
   t = t || {};
   const n = {};
-  function r(c, u, h) {
-    return a.isPlainObject(c) && a.isPlainObject(u) ? a.merge.call({ caseless: h }, c, u) : a.isPlainObject(u) ? a.merge({}, u) : a.isArray(u) ? u.slice() : u;
+  function r(l, u, h) {
+    return a.isPlainObject(l) && a.isPlainObject(u) ? a.merge.call({ caseless: h }, l, u) : a.isPlainObject(u) ? a.merge({}, u) : a.isArray(u) ? u.slice() : u;
   }
-  function s(c, u, h) {
+  function s(l, u, h) {
     if (a.isUndefined(u)) {
-      if (!a.isUndefined(c))
-        return r(void 0, c, h);
+      if (!a.isUndefined(l))
+        return r(void 0, l, h);
     } else
-      return r(c, u, h);
+      return r(l, u, h);
   }
-  function o(c, u) {
+  function o(l, u) {
     if (!a.isUndefined(u))
       return r(void 0, u);
   }
-  function i(c, u) {
+  function i(l, u) {
     if (a.isUndefined(u)) {
-      if (!a.isUndefined(c))
-        return r(void 0, c);
+      if (!a.isUndefined(l))
+        return r(void 0, l);
     } else
       return r(void 0, u);
   }
-  function l(c, u, h) {
+  function c(l, u, h) {
     if (h in t)
-      return r(c, u);
+      return r(l, u);
     if (h in e)
-      return r(void 0, c);
+      return r(void 0, l);
   }
   const d = {
     url: o,
@@ -1076,12 +1076,12 @@ function P(e, t) {
     cancelToken: i,
     socketPath: i,
     responseEncoding: i,
-    validateStatus: l,
-    headers: (c, u) => s(be(c), be(u), !0)
+    validateStatus: c,
+    headers: (l, u) => s(be(l), be(u), !0)
   };
   return a.forEach(Object.keys(Object.assign({}, e, t)), function(u) {
     const h = d[u] || s, g = h(e[u], t[u], u);
-    a.isUndefined(g) && h !== l || (n[u] = g);
+    a.isUndefined(g) && h !== c || (n[u] = g);
   }), n;
 }
 const Me = "1.4.0", ce = {};
@@ -1090,23 +1090,23 @@ const Me = "1.4.0", ce = {};
     return typeof r === e || "a" + (t < 1 ? "n " : " ") + e;
   };
 });
-const Ee = {};
+const Se = {};
 ce.transitional = function(t, n, r) {
   function s(o, i) {
     return "[Axios v" + Me + "] Transitional option '" + o + "'" + i + (r ? ". " + r : "");
   }
-  return (o, i, l) => {
+  return (o, i, c) => {
     if (t === !1)
       throw new m(
         s(i, " has been removed" + (n ? " in " + n : "")),
         m.ERR_DEPRECATED
       );
-    return n && !Ee[i] && (Ee[i] = !0, console.warn(
+    return n && !Se[i] && (Se[i] = !0, console.warn(
       s(
         i,
         " has been deprecated since v" + n + " and will be removed in the near future"
       )
-    )), t ? t(o, i, l) : !0;
+    )), t ? t(o, i, c) : !0;
   };
 };
 function nn(e, t, n) {
@@ -1117,7 +1117,7 @@ function nn(e, t, n) {
   for (; s-- > 0; ) {
     const o = r[s], i = t[o];
     if (i) {
-      const l = e[o], d = l === void 0 || i(l, o, e);
+      const c = e[o], d = c === void 0 || i(c, o, e);
       if (d !== !0)
         throw new m("option " + o + " must be " + d, m.ERR_BAD_OPTION_VALUE);
       continue;
@@ -1167,31 +1167,31 @@ class M {
       (f) => {
         delete o[f];
       }
-    ), n.headers = R.concat(i, o);
-    const l = [];
+    ), n.headers = O.concat(i, o);
+    const c = [];
     let d = !0;
     this.interceptors.request.forEach(function(p) {
-      typeof p.runWhen == "function" && p.runWhen(n) === !1 || (d = d && p.synchronous, l.unshift(p.fulfilled, p.rejected));
+      typeof p.runWhen == "function" && p.runWhen(n) === !1 || (d = d && p.synchronous, c.unshift(p.fulfilled, p.rejected));
     });
-    const c = [];
+    const l = [];
     this.interceptors.response.forEach(function(p) {
-      c.push(p.fulfilled, p.rejected);
+      l.push(p.fulfilled, p.rejected);
     });
     let u, h = 0, g;
     if (!d) {
       const f = [ge.bind(this), void 0];
-      for (f.unshift.apply(f, l), f.push.apply(f, c), g = f.length, u = Promise.resolve(n); h < g; )
+      for (f.unshift.apply(f, c), f.push.apply(f, l), g = f.length, u = Promise.resolve(n); h < g; )
         u = u.then(f[h++], f[h++]);
       return u;
     }
-    g = l.length;
+    g = c.length;
     let w = n;
     for (h = 0; h < g; ) {
-      const f = l[h++], p = l[h++];
+      const f = c[h++], p = c[h++];
       try {
         w = f(w);
-      } catch (O) {
-        p.call(this, O);
+      } catch (A) {
+        p.call(this, A);
         break;
       }
     }
@@ -1200,14 +1200,14 @@ class M {
     } catch (f) {
       return Promise.reject(f);
     }
-    for (h = 0, g = c.length; h < g; )
-      u = u.then(c[h++], c[h++]);
+    for (h = 0, g = l.length; h < g; )
+      u = u.then(l[h++], l[h++]);
     return u;
   }
   getUri(t) {
     t = P(this.defaults, t);
-    const n = qe(t.baseURL, t.url);
-    return Ie(n, t.params, t.paramsSerializer);
+    const n = He(t.baseURL, t.url);
+    return ke(n, t.params, t.paramsSerializer);
   }
 }
 a.forEach(["delete", "get", "head", "options"], function(t) {
@@ -1221,8 +1221,8 @@ a.forEach(["delete", "get", "head", "options"], function(t) {
 });
 a.forEach(["post", "put", "patch"], function(t) {
   function n(r) {
-    return function(o, i, l) {
-      return this.request(P(l || {}, {
+    return function(o, i, c) {
+      return this.request(P(c || {}, {
         method: t,
         headers: r ? {
           "Content-Type": "multipart/form-data"
@@ -1234,7 +1234,7 @@ a.forEach(["post", "put", "patch"], function(t) {
   }
   M.prototype[t] = n(), M.prototype[t + "Form"] = n(!0);
 });
-const q = M;
+const H = M;
 class le {
   constructor(t) {
     if (typeof t != "function")
@@ -1253,14 +1253,14 @@ class le {
       r._listeners = null;
     }), this.promise.then = (s) => {
       let o;
-      const i = new Promise((l) => {
-        r.subscribe(l), o = l;
+      const i = new Promise((c) => {
+        r.subscribe(c), o = c;
       }).then(s);
       return i.cancel = function() {
         r.unsubscribe(o);
       }, i;
-    }, t(function(o, i, l) {
-      r.reason || (r.reason = new F(o, i, l), n(r.reason));
+    }, t(function(o, i, c) {
+      r.reason || (r.reason = new B(o, i, c), n(r.reason));
     });
   }
   /**
@@ -1382,16 +1382,16 @@ Object.entries(re).forEach(([e, t]) => {
 });
 const an = re;
 function ve(e) {
-  const t = new q(e), n = Re(q.prototype.request, t);
-  return a.extend(n, q.prototype, t, { allOwnKeys: !0 }), a.extend(n, t, null, { allOwnKeys: !0 }), n.create = function(s) {
+  const t = new H(e), n = Oe(H.prototype.request, t);
+  return a.extend(n, H.prototype, t, { allOwnKeys: !0 }), a.extend(n, t, null, { allOwnKeys: !0 }), n.create = function(s) {
     return ve(P(e, s));
   }, n;
 }
 const y = ve(ae);
-y.Axios = q;
-y.CanceledError = F;
+y.Axios = H;
+y.CanceledError = B;
 y.CancelToken = rn;
-y.isCancel = He;
+y.isCancel = qe;
 y.VERSION = Me;
 y.toFormData = $;
 y.AxiosError = m;
@@ -1402,7 +1402,7 @@ y.all = function(t) {
 y.spread = sn;
 y.isAxiosError = on;
 y.mergeConfig = P;
-y.AxiosHeaders = R;
+y.AxiosHeaders = O;
 y.formToJSON = (e) => je(a.isHTMLForm(e) ? new FormData(e) : e);
 y.HttpStatusCode = an;
 y.default = y;
@@ -1576,20 +1576,20 @@ const un = {
   postFile(e, t, n = null) {
     return new Promise((r, s) => {
       this.getBase64(t).then((o) => {
-        var i = new Headers(), l = t.name.split("."), d = {
+        var i = new Headers(), c = t.name.split("."), d = {
           method: "POST",
           headers: i,
           // mode: "cors",
           body: JSON.stringify({
             upload: o.base64,
-            ext: l.pop(),
-            filename: l.join("."),
+            ext: c.pop(),
+            filename: c.join("."),
             id: n
           }),
           cache: "default"
         };
-        const c = e.includes("://") ? e : this.getBaseUrl() + e;
-        fetch(c, d).then(function(u) {
+        const l = e.includes("://") ? e : this.getBaseUrl() + e;
+        fetch(l, d).then(function(u) {
           u.json().then(function(h) {
             r(h);
           }).catch((h) => {
@@ -1608,7 +1608,7 @@ const un = {
       }, r.onerror = (s) => n(s);
     });
   }
-}, I = "drupal-vuejs-credential", Se = "drupal-vuejs-cre-val", fn = {
+}, k = "drupal-vuejs-credential", Ee = "drupal-vuejs-cre-val", fn = {
   ...un,
   /**
    * ( Semble fonctionner au niveau drupal sans necessite de module ).
@@ -1634,18 +1634,18 @@ const un = {
    * Require https for securities.
    */
   saveTempCredential(e, t) {
-    localStorage.setItem(I, JSON.stringify(e)), localStorage.setItem(Se, JSON.stringify(t));
+    localStorage.setItem(k, JSON.stringify(e)), localStorage.setItem(Ee, JSON.stringify(t));
   },
   loadCredential() {
-    const e = localStorage.getItem(I);
+    const e = localStorage.getItem(k);
     if (e)
       return JSON.parse(e);
   },
   deleteConnexion() {
-    localStorage.removeItem(I);
+    localStorage.removeItem(k);
   },
   checkCurrentUserIsLogin() {
-    const e = localStorage.getItem(Se), t = localStorage.getItem(I);
+    const e = localStorage.getItem(Ee), t = localStorage.getItem(k);
     if (e !== void 0 && t !== void 0 && e)
       return JSON.parse(e);
   }
@@ -1728,7 +1728,7 @@ const hn = {
   languageId: window.drupalSettings && window.drupalSettings.path && window.drupalSettings.path.pathPrefix ? window.drupalSettings.path.pathPrefix.replaceAll("/", "") : null,
   debug: !0,
   TestDomain: window.location.hostname === "localhost" ? "http://my-nutribe.kksa" : null
-}, Oe = {
+}, Ae = {
   props: {
     id: [Number, String],
     starsNumber: Number,
@@ -1746,36 +1746,36 @@ const hn = {
     const t = "comment-icon-star", n = "comment-icon-empty-star", r = ze(Math.floor(e.percentage / 20)), s = 5 * (e.percentage % 20) + "%";
     let o = Array(5);
     const i = e.id ? "linear-gradient-" + e.id : "linear-gradient";
-    let l = A("svg", {
+    let c = R("svg", {
       viewBox: "0 0 24 24",
       xmlns: "http://www.w3.org/2000/svg"
-    }, [A("defs", null, [A("linearGradient", {
+    }, [R("defs", null, [R("linearGradient", {
       id: i
-    }, [A("stop", {
+    }, [R("stop", {
       class: t + " comment-stars",
       offset: s
-    }, null), A("stop", {
+    }, null), R("stop", {
       class: n + " comment-stars",
       offset: "0%"
-    }, null)])]), A("path", {
+    }, null)])]), R("path", {
       fill: "url(#" + i + ")",
       d: "m21.5 9.757-5.278 4.354 1.649 7.389L12 17.278 6.129 21.5l1.649-7.389L2.5 9.757l6.333-.924L12 2.5l3.167 6.333Z"
-    }, null)]), d = A("svg", {
+    }, null)]), d = R("svg", {
       fill: "currentColor",
       viewBox: "0 0 24 24",
       xmlns: "http://www.w3.org/2000/svg"
-    }, [A("path", {
+    }, [R("path", {
       d: "m21.5 9.757-5.278 4.354 1.649 7.389L12 17.278 6.129 21.5l1.649-7.389L2.5 9.757l6.333-.924L12 2.5l3.167 6.333Z"
     }, null)]);
     for (let u = 0; u < o.length; u++)
       o[u] = u < r.value ? 1 : 0;
     s != "0%" && (o[r.value] = 2);
-    let c = o.map((u) => K("span", {
+    let l = o.map((u) => K("span", {
       class: [u ? t : n, "comment-stars"]
-    }, u == 2 ? l : d));
-    return () => K("span", {
-      class: "d-flex"
-    }, [...c, e.label == "" ? "" : K("span", {
+    }, u == 2 ? c : d));
+    return console.log("props : ", e), () => K("span", {
+      class: "d-flex align-items-center"
+    }, [...l, e.label == "" ? "" : K("span", {
       class: e.labelClass
     }, e.label)]);
   }
@@ -1784,20 +1784,27 @@ const hn = {
   e.behaviors.rating_app_start = {
     attach: function(t, n) {
       if (n.rating_app) {
-        const r = n.rating_app.start, s = r.url_get_start, o = t.getElementById ? t.getElementById(r.id) : null;
-        o && (o.classList.contains("loaded") || (o.classList.add("loaded"), pn.dGet(s).then((i) => {
-          ue(Oe, {
-            percentage: i.data.percent,
-            label: i.data.count + " Avis",
-            id: r.id
-          }).mount(o);
-        }).catch((i) => {
-          console.log("something went wrong: ", i), ue(Oe, {
-            percentage: 0,
-            id: r.id,
-            label: "0 Avis"
-          }).mount(o);
-        })));
+        const r = t.querySelectorAll ? t.querySelectorAll(".rating-app-start") : null;
+        r && r.length && r.forEach((s) => {
+          if (!s.classList.contains("loaded")) {
+            s.classList.add("loaded");
+            const o = s.getAttribute("data_url_get_start"), i = s.getAttribute("data_entity_id");
+            pn.dGet(o).then((c) => {
+              ue(Ae, {
+                percentage: c.data.percent,
+                label: c.data.count + " Avis",
+                id: i,
+                "label-class": "pl-2"
+              }).mount(s);
+            }).catch((c) => {
+              console.log("something went wrong: ", c), ue(Ae, {
+                percentage: 0,
+                id: i,
+                label: "0 Avis"
+              }).mount(s);
+            });
+          }
+        });
       }
     }
   };

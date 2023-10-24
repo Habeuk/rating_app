@@ -27,7 +27,13 @@ class EntityStartDefaultFormatter extends FormatterBase {
    */
   public static function defaultSettings() {
     return [
-      'foo' => 'bar'
+      'class_container' => '',
+      'size' => '',
+      'options_size' => [
+        '' => 'Normal',
+        'comment-stars--small' => 'Comment-stars small',
+        'comment-stars--big' => 'Comment-stars big'
+      ]
     ] + parent::defaultSettings();
   }
   
@@ -37,10 +43,16 @@ class EntityStartDefaultFormatter extends FormatterBase {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
-    $element['foo'] = [
+    $element['class_container'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Foo'),
-      '#default_value' => $settings['foo']
+      '#title' => $this->t('class_container'),
+      '#default_value' => $settings['class_container']
+    ];
+    $element['size'] = [
+      '#type' => 'select',
+      '#title' => $this->t('size'),
+      '#default_value' => $settings['size'],
+      '#options' => $this->getSetting('options_size')
     ];
     return $element;
   }
@@ -50,10 +62,7 @@ class EntityStartDefaultFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $settings = $this->getSettings();
-    $summary[] = $this->t('Foo: @foo', [
-      '@foo' => $settings['foo']
-    ]);
+    $summary = [];
     return $summary;
   }
   
@@ -72,7 +81,9 @@ class EntityStartDefaultFormatter extends FormatterBase {
         'field_name' => $items->getName()
       ]);
       $comment_type = $this->getFieldSetting('comment_type');
-      $id = Html::getUniqueId('rating-app-reviews');
+      $class_container = $this->getSetting('class_container');
+      $size = $this->getSetting('size');
+      
       $element[] = [
         // add additionnal information
         '#comment_type' => $comment_type,
@@ -82,23 +93,24 @@ class EntityStartDefaultFormatter extends FormatterBase {
           '#tag' => 'div',
           '#value' => $this->t('Loading ...'),
           '#attributes' => [
-            'id' => $id,
+            'data_entity_id' => $items->getEntity()->id(),
+            'data_url_get_start' => '/' . $urlStart->getInternalPath(),
             'class' => [
-              'rating-app-start'
+              'rating-app-start',
+              $class_container,
+              $size
             ]
           ]
         ],
         'comment_form' => NULL
       ];
-      // dump($items->getName());
       $element['#attached']['drupalSettings']['rating_app'] = [
         'start' => [
           'field_name' => $items->getName(),
           'comment_type' => $comment_type,
-          'entity_id' => $items->getEntity()->id(),
-          'entity_type_id' => $items->getEntity()->getEntityTypeId(),
-          'url_get_start' => '/' . $urlStart->getInternalPath(),
-          'id' => $id
+          // 'entity_id' => $items->getEntity()->id(),
+          'entity_type_id' => $items->getEntity()->getEntityTypeId()
+          // 'url_get_start' => '/' . $urlStart->getInternalPath()
         ] + $this->getSettings()
       ];
       $element['#attached']['library'][] = 'rating_app/reviews_start';
