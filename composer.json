@@ -9,8 +9,7 @@
       "email": "kksasteph888@gmail.com"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
-    "drupal/votingapi": "dev-3.x"
+  	"drupal/votingapi": "^3.0@beta"
   }
 }
