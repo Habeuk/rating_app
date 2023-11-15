@@ -10,6 +10,8 @@
     }
   ],
   "require": {
-  	"drupal/votingapi": "^3.0@beta"
+  	"drupal/votingapi": "^3.0@beta",
+  	"habeuk/drupal_utility": "^0.0.1",
+  	"habeuk/debug": "^2.0"
   }
 }
