@@ -11,7 +11,7 @@
   ],
   "require": {
   	"drupal/votingapi": "^3.0@beta",
-  	"habeuk/drupal_utility": "^0.0.1",
+  	"habeuk/drupal_utility": "^1.0",
   	"habeuk/debug": "^2.0"
   }
 }
