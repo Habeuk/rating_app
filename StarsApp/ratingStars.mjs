@@ -1726,7 +1726,7 @@ const hn = {
 }, pn = {
   ...hn,
   languageId: window.drupalSettings && window.drupalSettings.path && window.drupalSettings.path.pathPrefix ? window.drupalSettings.path.pathPrefix.replaceAll("/", "") : null,
-  debug: !0,
+  debug: !1,
   TestDomain: window.location.hostname === "localhost" ? "http://my-nutribe.kksa" : null
 }, Ae = {
   props: {
@@ -1773,7 +1773,7 @@ const hn = {
     let l = o.map((u) => K("span", {
       class: [u ? t : n, "comment-stars"]
     }, u == 2 ? c : d));
-    return console.log("props : ", e), () => K("span", {
+    return () => K("span", {
       class: "d-flex align-items-center"
     }, [...l, e.label == "" ? "" : K("span", {
       class: e.labelClass
